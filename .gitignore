@@ -1,0 +1,23 @@
+# Dependências do Gerenciador de Pacotes (Node.js)
+/node_modules
+/package-lock.json      
+
+# Arquivos de Build/Distribuição
+# O Vite cria a pasta 'dist' ao compilar o projeto para produção
+/dist
+/build
+/out
+
+# Logs e Dados de Debug
+npm-debug.log
+.eslintcache
+.prettiercache
+
+# Variáveis de Ambiente e Arquivos Secretos
+# Mantenha suas chaves de API e variáveis de ambiente fora do Git!
+#.env
+#.env.local
+#.env.*.local
+
+# Arquivos de vscode
+.vscode 
