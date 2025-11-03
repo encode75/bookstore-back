@@ -1,5 +1,5 @@
-// controllers/userController.js
-import User from '../models/User.js'; // Note a extensão .js
+import User from '../models/User.js'; 
+import bcrypt from 'bcryptjs'; // Usando bcryptjs
 
 // Função auxiliar para remover a senha do objeto de resposta
 const sanitizeUser = (user) => {
@@ -104,11 +104,41 @@ export const loginUser = async (req, res) => {
     }
 };
 
+// User Admin
+export const userAdmin = async () => {
+
+    const userAdmin = {
+        username: "admin",
+        password: "123",
+        name: "System Administrator"
+    };
+
+    const salt = await bcrypt.genSalt(10);
+    userAdmin.password = await bcrypt.hash(userAdmin.password, salt);
+
+    try {
+        const users = await User.find();
+    
+        if (users.length === 0) {
+            const user = new User(userAdmin); 
+            const r = await user.save();
+            console.log("Usuário admin criado com sucesso!"); 
+        }
+
+    } catch (err) {
+        console.error({
+            "message": "Erro ao criar usuário admin",
+            "err": err.message 
+        });
+    }
+};
+
 // Exporta todas as funções como um objeto default para ser importado no router
 export default {
     createUser,
     getAllUsers,
     updateUser,
     deleteUser,
-    loginUser
+    loginUser,
+    userAdmin
 };

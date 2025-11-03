@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
-// URL de conexão completa (preferencialmente lida de variável de ambiente)
+// URL de conexão vinda do .env
 const DB_URL = process.env.MONGO_URI; 
 
 const connectDB = async () => {

@@ -41,7 +41,7 @@ export const updateBook = async (req, res) => {
             updateData, 
             { 
                 new: true, // CHAVE: Retorna o documento *após* a atualização.
-                runValidators: true // Opcional: Garante que as validações do Schema rodem.
+                runValidators: true // Parâmetro opcional: Garante que as validações do Schema rodem.
             }
         );
 
