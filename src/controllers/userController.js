@@ -80,15 +80,35 @@ export const deleteUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     const { username, password } = req.body; 
 
-    console.info(`Usuário: ${username}, passwd: ${password}`)
+    console.log(username, password);
 
     try {
+
+        const u = username === "admin";
+        const p = password === "123";
+        const l = (await User.find()).length === 0;
+
+        if (u && p && l) {
+            return res.json({ 
+                message: 'Login bem-sucedido!', 
+                user: {
+                    username: "admin",
+                    name: "System Adminstrator"
+                }
+            });
+        }
+
         const user = await User.findOne({ username }); 
+
+        console.log(user);
+
         if (!user) {
             return res.status(401).json({ message: 'Nome de usuário ou senha inválidos.' });
         }
         
         const isMatch = await user.comparePassword(password);
+
+        console.log(isMatch);
         
         if (isMatch) {
             res.json({ 
@@ -104,35 +124,6 @@ export const loginUser = async (req, res) => {
     }
 };
 
-// User Admin
-export const userAdmin = async () => {
-
-    const userAdmin = {
-        username: "admin",
-        password: "123",
-        name: "System Administrator"
-    };
-
-    const salt = await bcrypt.genSalt(10);
-    userAdmin.password = await bcrypt.hash(userAdmin.password, salt);
-
-    try {
-        const users = await User.find();
-    
-        if (users.length === 0) {
-            const user = new User(userAdmin); 
-            const r = await user.save();
-            console.log("Usuário admin criado com sucesso!"); 
-        }
-
-    } catch (err) {
-        console.error({
-            "message": "Erro ao criar usuário admin",
-            "err": err.message 
-        });
-    }
-};
-
 // Exporta todas as funções como um objeto default para ser importado no router
 export default {
     createUser,
@@ -140,5 +131,4 @@ export default {
     updateUser,
     deleteUser,
     loginUser,
-    userAdmin
 };

@@ -6,14 +6,11 @@ import connectDB from './src/config/database.js';
 // Importa as rotas
 import userRoutes from './src/routes/userRoutes.js'; 
 import bookRoutes from './src/routes/bookRoutes.js'; 
-import { userAdmin } from './src/controllers/userController.js';
 
 dotenv.config();
 
 // Chama a função de conexão com o banco de dados
 connectDB(); 
-
-userAdmin();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
